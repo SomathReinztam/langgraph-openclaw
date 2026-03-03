@@ -1,0 +1,15 @@
+FROM python:3.11-slim
+
+WORKDIR /workspace
+
+# Crear usuario no-root
+RUN useradd -m sandboxuser
+USER sandboxuser
+
+# Evitar instalaciones globales peligrosas
+ENV PATH="/home/sandboxuser/.local/bin:$PATH"
+
+# Evitar buffers gigantes
+ENV PYTHONUNBUFFERED=1
+
+CMD ["bash"]

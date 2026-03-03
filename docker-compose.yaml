@@ -1,0 +1,17 @@
+services:
+  # postgres-db:
+  #   image: postgres:15
+  #   container_name: deepagent-db
+  #   environment:
+  #     POSTGRES_USER: ${DB_USER}
+  #     POSTGRES_PASSWORD: ${DB_PASS} 
+  #     POSTGRES_DB: ${DB_NAME}
+  #   ports:
+  #     - "${DB_PORT}:5432"
+  
+  sandbox:
+    image: deepagent-sandbox
+    build:
+      dockerfile: dockerfile.sandbox
+    tty: true
+    stdin_open: true
