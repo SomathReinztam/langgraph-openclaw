@@ -25,27 +25,27 @@ class ChatNotFoundError(DatabaseError):
 # ------------------------
 
 
-class ToolCalls(BaseModel):
+class ToolCalls(TypedDict):
     name : str
     args : Dict[str, Any]
     id : str
     type : str
 
 
-class UsageMetadata(BaseModel):
+class UsageMetadata(TypedDict):
     input_tokens: int
     output_tokens: int
     total_tokens: int
     input_token_details: Dict[str, Any]
 
 
-class AiResponse(BaseModel):
+class AiResponse(TypedDict):
     content : Any
     tool_calls : ToolCalls
     usage_metadata : UsageMetadata
 
 
-class ToolResponse(BaseModel):
+class ToolResponse(TypedDict):
     content : Any
     tool_call_id : str
     name : str
@@ -54,7 +54,7 @@ class ToolResponse(BaseModel):
 EduchatResponseItem = Union[AiResponse, ToolResponse]
 
 
-class RunEduChatResponse(BaseModel):
+class RunEduChatResponse(TypedDict):
     educhat_response : List[EduchatResponseItem]
     
 
