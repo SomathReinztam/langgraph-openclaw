@@ -5,7 +5,6 @@ from src.utils import settings
 from src.database import models
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage, ToolMessage, ToolCall
 from src.database.schemas import ChatModelProvider, RunEduChatResponse
-from typing import List, Dict, Any
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_groq import ChatGroq
@@ -19,7 +18,7 @@ from src.utils.logging_config import get_logger
 logger = get_logger(module_name="run_educhat", DIR="database")
 
 
-def run_educhat(user_id : int, chat_id : int, human_message : str, system_prompt : str, educhat : CompiledStateGraph) -> List[Dict[str, Any]]:
+def run_educhat(user_id : int, chat_id : int, human_message : str, system_prompt : str, educhat : CompiledStateGraph) -> RunEduChatResponse:
 
     # conexion a la base de datos de la app
     conn_string = f"postgresql+psycopg2://{settings.APP_DB_USER}:{settings.APP_DB_PASS}@{settings.APP_DB_HOST}:{settings.APP_DB_PORT}/{settings.APP_DB_NAME}"
@@ -168,7 +167,7 @@ def config_educhat(user_id : int, chat_id : int) -> CompiledStateGraph:
 
     # creando engine para la base de datos edubot
     conn_string_edubot = f"postgresql+psycopg2://{settings.DB_USER}:{settings.DB_PASS}@{settings.DB_HOST}:{settings.DB_PORT}/{settings.DB_NAME}"
-    engine_edubot = create_engine(conn_string_app)
+    engine_edubot = create_engine(conn_string_edubot)
 
 
     if provider_conf.client == "google":
@@ -181,6 +180,8 @@ def config_educhat(user_id : int, chat_id : int) -> CompiledStateGraph:
         return educhat
     elif provider_conf.client == "deepseek":
         llm = ChatDeepSeek(model=provider_conf.model, temperature=provider_conf.temperature, api_key=settings.DEEPSEEK_API_KEY)
+        educhat = create_educhat(llm=llm, engine=engine_edubot)
+        return educhat
     
 
 
