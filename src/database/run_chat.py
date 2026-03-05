@@ -112,6 +112,7 @@ def run_educhat(user_id : int, chat_id : int, human_message : str, system_prompt
             usage_metadata = msg.usage_metadata
             
             message_data = {'content':content, 'tool_calls':tool_calls, 'usage_metadata':usage_metadata}
+            message_data['type'] = "Ai"
             messages_model_record = models.MessageModel(
                 user_id=user_id,
                 chat_id=chat_id,
@@ -129,6 +130,7 @@ def run_educhat(user_id : int, chat_id : int, human_message : str, system_prompt
             name = msg.name
 
             message_data = {'content':content, 'tool_call_id':tool_call_id, 'name':name}
+            message_data['type'] = "Tool"
             messages_model_record = models.MessageModel(
                 user_id=user_id,
                 chat_id=chat_id,

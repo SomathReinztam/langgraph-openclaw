@@ -48,14 +48,15 @@ class CrudHelper:
 
     def new_user(self, name : str, email : str, password : str):
                 with self.session_scope() as session:
-                    user_db = models.ApppUserModel(
-                    name=name,
-                    email=email,
-                    password=password
-                )
+
+                    user_db = models.AppUserModel(
+                        name=name,
+                        email=email,
+                        password=password
+                    )
                 
-                session.add(user_db)
-                session.flush()
+                    session.add(user_db)
+                    session.flush()
     
 
     def new_chat(self, user_id : str, chat_model_provider : Dict[str, Any]):
@@ -74,4 +75,8 @@ class CrudHelper:
 if __name__=="__main__":
      crudhelper = CrudHelper()
      crudhelper.create_database()
-     
+
+"""
+python3 -m src.database.crud
+
+"""
