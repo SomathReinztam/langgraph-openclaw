@@ -7,7 +7,7 @@ class Base(DeclarativeBase):
     pass
 
 
-class ApppUserModel(Base):
+class AppUserModel(Base):
     __tablename__ = "appusers"
 
     user_id = Column(Integer, primary_key=True, autoincrement=True)
@@ -25,7 +25,7 @@ class ChatModel(Base):
     #db_credentials = Column(JSON) las credenciales de la base de datos `edubot` estarán quemadas en el .env
     chat_model_provider = Column(JSON) # Aquí espero un json, por ejemplo: {"client":google, "model":"gemini-2.0-flash", "temperature":0.2} por ahora "model" seran los disponibles por google, groq y deepseek
 
-    user = relationship("UserModel", backref="chats")
+    user = relationship("AppUserModel", backref="chats")
 
 
 
@@ -40,6 +40,6 @@ class MessageModel(Base):
     message = Column(JSON)
     date = Column(DateTime(timezone=True), server_default=func.now())
 
-    user = relationship("UserModel", backref="message")
+    user = relationship("AppUserModel", backref="message")
     chat = relationship("ChatModel", backref="message")
 

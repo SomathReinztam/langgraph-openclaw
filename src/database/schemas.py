@@ -37,11 +37,12 @@ class UsageMetadata(TypedDict):
     output_tokens: int
     total_tokens: int
     input_token_details: Dict[str, Any]
+    output_token_details : Dict[str, Any]
 
 
 class AiResponse(TypedDict):
     content : Any
-    tool_calls : ToolCalls
+    tool_calls : List[ToolCalls]
     usage_metadata : UsageMetadata
 
 
