@@ -3,12 +3,13 @@ import requests
 url = "http://localhost:8000/chats/"
 
 
-payload = {
+chat_model_provider = {
     'client':'google',
-    'model':'admin@admin.com',
+    'model':'gemini-3.1-flash-image-preview',
     'temperature':0.2
 }
 
+payload = {'user_id':1, 'chat_model_provider':chat_model_provider}
 
 headers = {
     "Content-Type": "application/json"

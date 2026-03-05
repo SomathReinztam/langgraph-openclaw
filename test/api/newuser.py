@@ -1,6 +1,6 @@
 import requests
 
-url = "http://localhost:8000/user/"
+url = "http://localhost:8000/users/"
 
 
 payload = {
