@@ -64,11 +64,15 @@ def create_educhat(llm : BaseChatModel, engine : Engine) -> CompiledStateGraph:
     def should_end(state : State) -> Literal["tool_node_wrapper", END]: # type: ignore
         logger.info("---"*5 + " ReAct_node ")
         last_ai_message = state["messages"][-1]
-        if last_ai_message.tool_calls:
+        if state["api_calls"] > 5:
+            logger.error("No se llegó a una respuesta en menos de 5 llamados a la api")
+            return END
+        elif last_ai_message.tool_calls:
             logger.info("tool_node_wrapper")
             return "tool_node_wrapper"
-        logger.info("END")
-        return END
+        else:
+            logger.info("END")
+            return END
     
 
     builder = StateGraph(State)
