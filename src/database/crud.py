@@ -71,4 +71,7 @@ class CrudHelper:
     
     
 
-            
+if __name__=="__main__":
+     crudhelper = CrudHelper()
+     crudhelper.create_database()
+     
