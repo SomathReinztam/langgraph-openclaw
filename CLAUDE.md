@@ -78,6 +78,39 @@ The `ChatModelProvider` config (stored as JSON in the `chat.chat_model_provider`
 ### Message Storage Format
 Messages are stored as JSON in `message.message`. AI messages carry `tool_calls` and `usage_metadata` as nested JSON; Tool messages carry `tool_call_id` and `name`. The reconstruction logic in `run_chat.py` must handle all three types to correctly replay conversation history.
 
+## Frontend (`frontend/`)
+
+React + Vite app with a terminal/pixel-art aesthetic. Proxies all API calls to the FastAPI backend so no CORS configuration is needed in development.
+
+**Install dependencies (first time):**
+```bash
+cd frontend && npm install
+```
+
+**Run the dev server (requires the FastAPI backend to be running):**
+```bash
+cd frontend && npm run dev   # http://localhost:3000
+```
+
+**Build for production:**
+```bash
+cd frontend && npm run build
+```
+
+Key frontend files:
+| File | Purpose |
+|---|---|
+| `frontend/vite.config.js` | Vite config; proxy rules for `/users`, `/chats`, `/runeduchat` |
+| `frontend/src/api.js` | All fetch calls to the FastAPI backend |
+| `frontend/src/App.jsx` | Root state: messages, userId, chatId, loading |
+| `frontend/src/App.css` | All styles — terminal green-on-black, CRT scanlines, pixel fonts |
+| `frontend/src/components/Sidebar.jsx` | Session config, create-user/chat forms |
+| `frontend/src/components/ChatWindow.jsx` | Scrollable message list, boot screen |
+| `frontend/src/components/Message.jsx` | Renders Human / AI / Tool / Error messages |
+| `frontend/src/components/InputBar.jsx` | Textarea input; Enter sends, Shift+Enter newline |
+
+Message color coding: user (white) · AI tool call (amber) · tool output (cyan, collapsible) · AI response (green) · errors (red).
+
 ## Environment Variables
 
 Two `.env` variable groups are required:
